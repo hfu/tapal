@@ -1,0 +1,25 @@
+{
+  "name": "tapal",
+  "version": "1.0.0",
+  "description": "divide planet.psm.pbf like TapalCatl",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hfu/tapal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hfu/tapal/issues"
+  },
+  "homepage": "https://github.com/hfu/tapal#readme",
+  "dependencies": {
+    "@mapbox/tilebelt": "^1.0.1",
+    "config": "^3.0.1",
+    "hjson": "^3.1.2"
+  }
+}

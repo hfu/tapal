@@ -1,0 +1,7 @@
+{
+  src: ../welt/planet-190107.osm.pbf
+  dst: dst
+  dz: 3
+  maxz: 6
+}
+
