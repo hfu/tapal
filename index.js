@@ -1,4 +1,5 @@
 const config = require('config')
+const fs = require('fs')
 const { spawnSync } = require('child_process')
 const tilebelt = require('@mapbox/tilebelt')
 const dz = config.get('dz')
@@ -33,13 +34,16 @@ const osmExport = (src, dst) => {
     `--overwrite`,
     `--progress`,
     `--bbox=${bbox.join(',')}`,
-    `--output=${dstPath}`,
+    `--output=${dstPath}.part`,
     `--output-format=pbf`,
     srcPath
   ]
-  console.log(`osmium ${params.join(' ')}`)
-  spawnSync('osmium', params, {stdio: 'inherit'})
-  console.log(` -> ${Math.round((new Date() - startTime) / 1000)}s`)
+  if (!fs.existsSync(dstPath)) {
+    console.log(`osmium ${params.join(' ')}`)
+    spawnSync('osmium', params, {stdio: 'inherit'})
+    fs.renameSync(`${dstPath}.part`, dstPath)
+    console.log(` -> ${Math.round((new Date() - startTime) / 1000)}s`)
+  }
   if (dst[0] < maxz) {
     divide(dst, dz)
   }
@@ -48,7 +52,10 @@ const osmExport = (src, dst) => {
 const divide = (zxy, dz) => {
   for (let dx = 0; dx < 2 ** dz; dx++) {
     for (let dy = 0; dy < 2 ** dz; dy++) {
-      osmExport(zxy, [zxy[0] + dz, zxy[1] + dx, zxy[2] + dy])
+      osmExport(zxy, [
+        zxy[0] + dz, 
+        zxy[1] * 2 ** dz + dx, 
+        zxy[2] * 2 ** dz + dy])
     }
   }
 }
