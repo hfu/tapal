@@ -19,6 +19,7 @@
   "homepage": "https://github.com/hfu/tapal#readme",
   "dependencies": {
     "@mapbox/tilebelt": "^1.0.1",
+    "byline": "^5.0.0",
     "config": "^3.0.1",
     "hjson": "^3.1.2"
   }
