@@ -50,12 +50,13 @@ const osmExport = (src, dst) => {
 }
 
 const divide = (zxy, dz) => {
-  for (let dx = 0; dx < 2 ** dz; dx++) {
-    for (let dy = 0; dy < 2 ** dz; dy++) {
-      osmExport(zxy, [
-        zxy[0] + dz, 
-        zxy[1] * 2 ** dz + dx, 
-        zxy[2] * 2 ** dz + dy])
+  const m = 2 ** (dz - 1)
+  for (let dx = 0; dx < m; dx++) {
+    for (let dy = 0; dy < m; dy++) {
+      osmExport(zxy, [zxy[0] + dz, zxy[1] * 2 ** dz + m - dx - 1, zxy[2] * 2 ** dz + m - dy - 1])
+      osmExport(zxy, [zxy[0] + dz, zxy[1] * 2 ** dz + m + dx,     zxy[2] * 2 ** dz + m - dy - 1])
+      osmExport(zxy, [zxy[0] + dz, zxy[1] * 2 ** dz + m - dx - 1, zxy[2] * 2 ** dz + m + dy])
+      osmExport(zxy, [zxy[0] + dz, zxy[1] * 2 ** dz + m + dx,     zxy[2] * 2 ** dz + m + dy])
     }
   }
 }
