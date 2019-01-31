@@ -31,17 +31,19 @@ const osmExport = (src, dst) => {
   if (bbox[2] > 180) bbox[2] = 180
   params = [
     `extract`,
+    `--strategy=smart`,
+    `--verbose`,
     `--overwrite`,
     `--progress`,
     `--bbox=${bbox.join(',')}`,
-    `--output=${dstPath}.part`,
+    `--output=${dstPath}-part`,
     `--output-format=pbf`,
     srcPath
   ]
   if (!fs.existsSync(dstPath)) {
     console.log(`osmium ${params.join(' ')}`)
     spawnSync('osmium', params, {stdio: 'inherit'})
-    fs.renameSync(`${dstPath}.part`, dstPath)
+    fs.renameSync(`${dstPath}-part`, dstPath)
     console.log(` -> ${Math.round((new Date() - startTime) / 1000)}s`)
   }
   if (dst[0] < maxz) {
